@@ -53,7 +53,7 @@ static NSString *const kEMMSupportParameterName = @"emm_support";
 // Minimal time interval before expiration for the access token or it needs to be refreshed.
 static NSTimeInterval const kMinimalTimeToExpire = 60.0;
 
-#if TARGET_OS_IOS && !TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_VISION && !TARGET_OS_MACCATALYST
 @interface GIDGoogleUser ()
 
 @property (nonatomic, strong) id<GTMAuthSessionDelegate> authSessionDelegate;
