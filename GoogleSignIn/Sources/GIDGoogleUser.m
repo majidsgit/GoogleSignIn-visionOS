@@ -135,7 +135,7 @@ static NSTimeInterval const kMinimalTimeToExpire = 60.0;
   }
   // This is the first handler in the queue, a fetch is needed.
   NSMutableDictionary *additionalParameters = [@{} mutableCopy];
-#if TARGET_OS_IOS && !TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_VISION && !TARGET_OS_MACCATALYST
   [additionalParameters addEntriesFromDictionary:
       [GIDEMMSupport updatedEMMParametersWithParameters:
           self.authState.lastTokenResponse.request.additionalParameters]];
@@ -159,7 +159,7 @@ static NSTimeInterval const kMinimalTimeToExpire = 60.0;
         [self.authState updateWithAuthorizationError:error];
       }
     }
-#if TARGET_OS_IOS && !TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_VISION && !TARGET_OS_MACCATALYST
     [GIDEMMSupport handleTokenFetchEMMError:error completion:^(NSError *_Nullable error) {
       // Process the handler queue to call back.
       NSArray<GIDGoogleUserCompletion> *refreshTokensHandlerQueue;
@@ -193,7 +193,7 @@ static NSTimeInterval const kMinimalTimeToExpire = 60.0;
 }
 
 - (void)addScopes:(NSArray<NSString *> *)scopes
-#if TARGET_OS_IOS || TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_VISION
     presentingViewController:(UIViewController *)presentingViewController
 #elif TARGET_OS_OSX
             presentingWindow:(NSWindow *)presentingWindow
@@ -213,7 +213,7 @@ static NSTimeInterval const kMinimalTimeToExpire = 60.0;
   }
   
   [GIDSignIn.sharedInstance addScopes:scopes
-#if TARGET_OS_IOS || TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_MACCATALYST || TARGET_OS_VISION
              presentingViewController:presentingViewController
 #elif TARGET_OS_OSX
                      presentingWindow:presentingWindow
@@ -223,7 +223,7 @@ static NSTimeInterval const kMinimalTimeToExpire = 60.0;
 
 #pragma mark - Private Methods
 
-#if TARGET_OS_IOS && !TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_VISION && !TARGET_OS_MACCATALYST
 - (nullable NSString *)emmSupport {
   return self.authState.lastAuthorizationResponse
       .request.additionalParameters[kEMMSupportParameterName];
@@ -238,7 +238,7 @@ static NSTimeInterval const kMinimalTimeToExpire = 60.0;
     _profile = profileData;
     
     GTMAuthSession *authSession = [[GTMAuthSession alloc] initWithAuthState:authState];
-#if TARGET_OS_IOS && !TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_VISION && !TARGET_OS_MACCATALYST
     _authSessionDelegate = [[GIDEMMSupport alloc] init];
     authSession.delegate = _authSessionDelegate;
 #endif // TARGET_OS_IOS && !TARGET_OS_MACCATALYST
