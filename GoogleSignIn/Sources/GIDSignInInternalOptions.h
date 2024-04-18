@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// The configuration to use during the flow.
 @property(nonatomic, readonly, nullable) GIDConfiguration *configuration;
 
-#if TARGET_OS_IOS || TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_VISION || TARGET_OS_MACCATALYST
 /// The view controller to use during the flow.
 @property(nonatomic, readonly, weak, nullable) UIViewController *presentingViewController;
 #elif TARGET_OS_OSX
@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString *loginHint;
 
 /// Creates the default options.
-#if TARGET_OS_IOS || TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_VISION || TARGET_OS_MACCATALYST
 + (instancetype)defaultOptionsWithConfiguration:(nullable GIDConfiguration *)configuration
                        presentingViewController:(nullable UIViewController *)presentingViewController
                                       loginHint:(nullable NSString *)loginHint
