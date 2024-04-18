@@ -25,7 +25,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation GIDSignInInternalOptions
-#if TARGET_OS_IOS || TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_VISION || TARGET_OS_MACCATALYST
 + (instancetype)defaultOptionsWithConfiguration:(nullable GIDConfiguration *)configuration
                        presentingViewController:(nullable UIViewController *)presentingViewController
                                       loginHint:(nullable NSString *)loginHint
@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
     options->_continuation = NO;
     options->_addScopesFlow = addScopesFlow;
     options->_configuration = configuration;
-#if TARGET_OS_IOS || TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_VISION || TARGET_OS_MACCATALYST
     options->_presentingViewController = presentingViewController;
 #elif TARGET_OS_OSX
     options->_presentingWindow = presentingWindow;
@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
   return options;
 }
 
-#if TARGET_OS_IOS || TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_VISION || TARGET_OS_MACCATALYST
 + (instancetype)defaultOptionsWithConfiguration:(nullable GIDConfiguration *)configuration
                        presentingViewController:(nullable UIViewController *)presentingViewController
                                       loginHint:(nullable NSString *)loginHint
@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
                                      completion:(nullable GIDSignInCompletion)completion {
 #endif // TARGET_OS_IOS || TARGET_OS_MACCATALYST
     GIDSignInInternalOptions *options = [self defaultOptionsWithConfiguration:configuration
-#if TARGET_OS_IOS || TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_VISION || TARGET_OS_MACCATALYST
                                                      presentingViewController:presentingViewController
 #elif TARGET_OS_OSX
                                                              presentingWindow:presentingWindow
@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)silentOptionsWithCompletion:(GIDSignInCompletion)completion {
   GIDSignInInternalOptions *options = [self defaultOptionsWithConfiguration:nil
-#if TARGET_OS_IOS || TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_VISION || TARGET_OS_MACCATALYST
                                                    presentingViewController:nil
 #elif TARGET_OS_OSX
                                                            presentingWindow:nil
@@ -108,7 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
     options->_continuation = continuation;
     options->_addScopesFlow = _addScopesFlow;
     options->_configuration = _configuration;
-#if TARGET_OS_IOS || TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_VISION || TARGET_OS_MACCATALYST
     options->_presentingViewController = _presentingViewController;
 #elif TARGET_OS_OSX
     options->_presentingWindow = _presentingWindow;
