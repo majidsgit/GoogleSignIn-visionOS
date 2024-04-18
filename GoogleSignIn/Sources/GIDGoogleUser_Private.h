@@ -46,7 +46,7 @@ typedef void (^GIDGoogleUserCompletion)(GIDGoogleUser *_Nullable user, NSError *
 @property(nonatomic, readwrite) id<GTMFetcherAuthorizationProtocol> fetcherAuthorizer;
 #pragma clang diagnostic pop
 
-#if TARGET_OS_IOS && !TARGET_OS_MACCATALYST
+#if TARGET_OS_IOS || TARGET_OS_VISION && !TARGET_OS_MACCATALYST
 // A string indicating support for Enterprise Mobility Management.
 @property(nonatomic, readonly, nullable) NSString *emmSupport;
 #endif // TARGET_OS_IOS && !TARGET_OS_MACCATALYST
